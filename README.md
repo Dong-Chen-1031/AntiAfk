@@ -1,3 +1,6 @@
+# Download
+To download the mod go here: https://modrinth.com/mod/antiafk
+
 # AntiAfk Repository
 
 - This repository is made to manage issues for  AntiAfk.
