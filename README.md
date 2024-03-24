@@ -8,3 +8,6 @@
 ## Mod Information
 
 The AntiAfk mod prevents players from going AFK be triggering specified actions.
+
+## Contributing
+Feel free to open issues or pull requests for bug fixes or improvements.
