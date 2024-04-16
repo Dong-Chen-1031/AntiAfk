@@ -5,14 +5,13 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
-import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
 public class IntervalCommand {
     public static int interval = 100;
 
-    public static void register(CommandDispatcher<FabricClientCommandSource> dispatcher, CommandRegistryAccess registryAccess) {
+    public static void register(CommandDispatcher<FabricClientCommandSource> dispatcher) {
         dispatcher.register(ClientCommandManager.literal("antiafk")
                 .then(ClientCommandManager.literal("interval")
                         .then(ClientCommandManager.argument("seconds", IntegerArgumentType.integer())
@@ -20,7 +19,7 @@ public class IntervalCommand {
     }
 
     private static int toggleInterval(CommandContext<FabricClientCommandSource> context) {
-        int seconds = 10;
+        int seconds;
 
         try {
             seconds = IntegerArgumentType.getInteger(context, "seconds");
@@ -35,7 +34,7 @@ public class IntervalCommand {
         }
 
         interval = seconds * 20;
-        context.getSource().sendFeedback(Text.literal("AntiAfk jump interval set to " + seconds + " seconds").formatted(Formatting.YELLOW));
+        context.getSource().sendFeedback(Text.literal("AntiAfk interval has been set to " + seconds + " seconds").formatted(Formatting.YELLOW));
         return 1;
     }
 }

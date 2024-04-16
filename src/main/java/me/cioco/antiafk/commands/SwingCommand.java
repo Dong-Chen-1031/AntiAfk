@@ -11,7 +11,7 @@ import net.minecraft.util.Formatting;
 public class SwingCommand {
     public static boolean shouldSwing = false;
 
-    public static void register(CommandDispatcher<FabricClientCommandSource> dispatcher, CommandRegistryAccess registryAccess) {
+    public static void register(CommandDispatcher<FabricClientCommandSource> dispatcher) {
         dispatcher.register(ClientCommandManager.literal("antiafk")
                 .then(ClientCommandManager.literal("swing").executes(SwingCommand::toggleSwing)));
     }

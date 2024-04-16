@@ -16,13 +16,11 @@ public class Main implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        addCommands();
         keyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.antiafk.toggle",
                 GLFW.GLFW_KEY_UNKNOWN,
                 "key.categories.antiafk"
         ));
-
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (client.world != null && client.player != null) {
@@ -39,15 +37,17 @@ public class Main implements ModInitializer {
                 }
             }
         });
+        addCommands();
     }
+
     private void addCommands() {
-        ClientCommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess) -> {
-            IntervalCommand.register(dispatcher,registryAccess);
-            JumpCommand.register(dispatcher,registryAccess);
-            SneakCommand.register(dispatcher,registryAccess);
-            SpinCommand.register(dispatcher,registryAccess);
-            SwingCommand.register(dispatcher,registryAccess);
-            MouseMovementCommand.register(dispatcher,registryAccess);
-        }));
+        ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
+            IntervalCommand.register(dispatcher);
+            JumpCommand.register(dispatcher);
+            SneakCommand.register(dispatcher);
+            SpinCommand.register(dispatcher);
+            SwingCommand.register(dispatcher);
+            MouseMovementCommand.register(dispatcher);
+        });
     }
 }

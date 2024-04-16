@@ -7,7 +7,10 @@
   "authors": [
     "Ciocolata47"
   ],
-  "contact": {},
+  "contact": {
+    "sources": "https://github.com/CIOCOLATA47/AntiAfk",
+    "issues": "https://github.com/CIOCOLATA47/AntiAfk/issues"
+  },
   "license": "MIT",
   "icon": "icon.png",
   "environment": "client",
@@ -15,6 +18,14 @@
     "main": [
       "me.cioco.antiafk.Main"
     ]
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.kofi": "https://ko-fi.com/ciocolata47",
+        "modmenu.modrinth": "https://modrinth.com/mod/antiafk"
+      }
+    }
   },
   "mixins": [
     "antiafk.mixins.json"
