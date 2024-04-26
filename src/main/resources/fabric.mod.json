@@ -8,6 +8,7 @@
     "Ciocolata47"
   ],
   "contact": {
+    "homepage": "https://modrinth.com/mod/antiafk",
     "sources": "https://github.com/CIOCOLATA47/AntiAfk",
     "issues": "https://github.com/CIOCOLATA47/AntiAfk/issues"
   },
@@ -22,8 +23,7 @@
   "custom": {
     "modmenu": {
       "links": {
-        "modmenu.kofi": "https://ko-fi.com/ciocolata47",
-        "modmenu.modrinth": "https://modrinth.com/mod/antiafk"
+        "modmenu.kofi": "https://ko-fi.com/ciocolata47"
       }
     }
   },
