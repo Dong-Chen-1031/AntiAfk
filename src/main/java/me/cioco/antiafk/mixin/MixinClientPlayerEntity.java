@@ -22,12 +22,12 @@ public class MixinClientPlayerEntity {
     private void onTick(CallbackInfo ci) {
         MinecraftClient mc = MinecraftClient.getInstance();
         PlayerEntity player = mc.player;
-        boolean UTIL = player.age % IntervalCommand.interval == 0;
+        boolean utiltick = player.age % IntervalCommand.interval == 0;
 
         int moveX = random.nextInt(11) - 5;
 
         if (Main.toggled) {
-            if (JumpCommand.autoJumpEnabled && UTIL && player.isOnGround()) {
+            if (JumpCommand.autoJumpEnabled && utiltick && player.isOnGround()) {
                 player.jump();
             }
 
@@ -35,17 +35,17 @@ public class MixinClientPlayerEntity {
                 player.setYaw(player.getYaw() + SpinCommand.spinSpeed);
             }
 
-            if (MouseMovementCommand.mousemovement && UTIL) {
+            if (MouseMovementCommand.mousemovement && utiltick) {
                 player.setYaw(player.getYaw() + moveX);
             }
 
-            if (SneakCommand.sneak && UTIL) {
+            if (SneakCommand.sneak && utiltick) {
                 mc.options.sneakKey.setPressed(true);
             } else if (SneakCommand.sneak) {
                 mc.options.sneakKey.setPressed(false);
             }
 
-            if (SwingCommand.shouldSwing && mc.world != null && mc.player != null && UTIL) {
+            if (SwingCommand.shouldSwing && mc.world != null && mc.player != null && utiltick) {
                 mc.player.swingHand(mc.player.getActiveHand());
             }
         }
