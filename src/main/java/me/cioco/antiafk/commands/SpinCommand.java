@@ -8,8 +8,11 @@ import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
+import static me.cioco.antiafk.Main.config;
+import static me.cioco.antiafk.config.AntiAfkConfig.autoSpinEnabled;
+
 public class SpinCommand {
-    public static boolean autoSpinEnabled = false;
+
     public static int spinSpeed = 1;
 
     public static void register(CommandDispatcher<FabricClientCommandSource> dispatcher) {
@@ -22,6 +25,8 @@ public class SpinCommand {
 
     private static int toggleSpin(CommandContext<FabricClientCommandSource> context) {
         autoSpinEnabled = !autoSpinEnabled;
+        config.saveConfiguration();
+
         String statusMessage = autoSpinEnabled ? "Auto Spin Enabled" : "Auto Spin Disabled";
         Formatting statusColor = autoSpinEnabled ? Formatting.GREEN : Formatting.RED;
         context.getSource().sendFeedback(Text.literal("AntiAfk: " + statusMessage).formatted(statusColor));

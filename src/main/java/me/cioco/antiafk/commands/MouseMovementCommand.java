@@ -8,9 +8,10 @@ import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
-public class MouseMovementCommand {
+import static me.cioco.antiafk.Main.config;
+import static me.cioco.antiafk.config.AntiAfkConfig.mouseMovement;
 
-    public static boolean mousemovement = false;
+public class MouseMovementCommand {
 
     public static void register(CommandDispatcher<FabricClientCommandSource> dispatcher) {
         dispatcher.register(ClientCommandManager.literal("antiafk")
@@ -18,9 +19,11 @@ public class MouseMovementCommand {
     }
 
     private static int mousemovement(CommandContext<FabricClientCommandSource> context) {
-        mousemovement = !mousemovement;
-        String statusMessage = mousemovement ? "MouseMovement Enabled" : "MouseMovement Disabled";
-        Formatting statusColor = mousemovement ? Formatting.GREEN : Formatting.RED;
+        mouseMovement = !mouseMovement;
+        config.saveConfiguration();
+
+        String statusMessage = mouseMovement ? "MouseMovement Enabled" : "MouseMovement Disabled";
+        Formatting statusColor = mouseMovement ? Formatting.GREEN : Formatting.RED;
         context.getSource().sendFeedback(Text.literal("AntiAfk: " + statusMessage).formatted(statusColor));
         return 1;
     }
