@@ -1,7 +1,8 @@
 package me.cioco.antiafk.mixin;
 
 import me.cioco.antiafk.Main;
-import me.cioco.antiafk.commands.*;
+import me.cioco.antiafk.commands.IntervalCommand;
+import me.cioco.antiafk.commands.SpinCommand;
 import me.cioco.antiafk.config.AntiAfkConfig;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
@@ -30,19 +31,22 @@ public class MixinClientPlayerEntity {
         if (player == null) return;
 
         boolean utiltick = player.age % IntervalCommand.interval == 0;
-        int moveX = random.nextInt(11) - 5;
+
+        int moveX = (random.nextInt(11) - 5) * (int) AntiAfkConfig.horizontalMultiplier;
+        int moveY = (random.nextInt(11) - 5) * (int) AntiAfkConfig.verticalMultiplier;
 
         if (Main.toggled) {
             if (AntiAfkConfig.autoJumpEnabled && utiltick && player.isOnGround()) {
                 player.jump();
             }
 
-            if (AntiAfkConfig.autoSpinEnabled) {
-                player.setYaw(player.getYaw() + SpinCommand.spinSpeed);
-            }
-
             if (AntiAfkConfig.mouseMovement && utiltick) {
                 player.setYaw(player.getYaw() + moveX);
+                player.setPitch(player.getPitch() + moveY);
+            }
+
+            if (AntiAfkConfig.autoSpinEnabled) {
+                player.setYaw(player.getYaw() + SpinCommand.spinSpeed);
             }
 
             if (AntiAfkConfig.sneak && utiltick) {

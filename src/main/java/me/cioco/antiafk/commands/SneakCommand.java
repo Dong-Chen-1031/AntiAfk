@@ -16,6 +16,7 @@ public class SneakCommand {
         dispatcher.register(ClientCommandManager.literal("antiafk")
                 .then(ClientCommandManager.literal("sneak").executes(SneakCommand::sneakcommand)));
     }
+
     private static int sneakcommand(CommandContext<FabricClientCommandSource> context) {
         sneak = !sneak;
         config.saveConfiguration();
