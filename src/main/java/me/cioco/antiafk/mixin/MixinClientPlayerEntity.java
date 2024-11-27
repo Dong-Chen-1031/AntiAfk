@@ -32,8 +32,8 @@ public class MixinClientPlayerEntity {
 
         boolean utiltick = player.age % IntervalCommand.interval == 0;
 
-        int moveX = (random.nextInt(11) - 5) * (int) AntiAfkConfig.horizontalMultiplier;
-        int moveY = (random.nextInt(11) - 5) * (int) AntiAfkConfig.verticalMultiplier;
+        float moveX = (random.nextInt(11) - 5) * AntiAfkConfig.horizontalMultiplier;
+        float moveY = (random.nextInt(11) - 5) * AntiAfkConfig.verticalMultiplier;
 
         if (Main.toggled) {
             if (AntiAfkConfig.autoJumpEnabled && utiltick && player.isOnGround()) {
