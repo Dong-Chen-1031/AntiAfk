@@ -53,6 +53,7 @@ public class Main implements ModInitializer {
             SpinCommand.register(dispatcher);
             SwingCommand.register(dispatcher);
             MouseMovementCommand.register(dispatcher);
+            MovementCommand.register(dispatcher);
         });
     }
 }

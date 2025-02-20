@@ -30,10 +30,11 @@ public class MixinClientPlayerEntity {
         PlayerEntity player = mc.player;
         if (player == null) return;
 
-        boolean utiltick = player.age % IntervalCommand.interval == 0;
+        AntiAfkConfig config = new AntiAfkConfig();
+        boolean utiltick = player.age % config.getInterval() == 0;
 
-        float moveX = (random.nextInt(11) - 5) * AntiAfkConfig.horizontalMultiplier;
-        float moveY = (random.nextInt(11) - 5) * AntiAfkConfig.verticalMultiplier;
+        float moveX = (random.nextInt(11) - 5) * (int) AntiAfkConfig.horizontalMultiplier;
+        float moveY = (random.nextInt(11) - 5) * (int) AntiAfkConfig.verticalMultiplier;
 
         if (Main.toggled) {
             if (AntiAfkConfig.autoJumpEnabled && utiltick && player.isOnGround()) {
@@ -53,6 +54,17 @@ public class MixinClientPlayerEntity {
                 mc.options.sneakKey.setPressed(true);
             } else if (AntiAfkConfig.sneak) {
                 mc.options.sneakKey.setPressed(false);
+            }
+
+            if (AntiAfkConfig.movementEnabled && Main.toggled) {
+                long currentTime = System.currentTimeMillis();
+                if (currentTime % 1000 < 500) {
+                    mc.options.leftKey.setPressed(true);
+                    mc.options.rightKey.setPressed(false);
+                } else {
+                    mc.options.leftKey.setPressed(false);
+                    mc.options.rightKey.setPressed(true);
+                }
             }
 
             if (AntiAfkConfig.shouldSwing && mc.world != null && mc.player != null && utiltick) {
