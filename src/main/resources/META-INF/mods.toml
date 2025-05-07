@@ -1,0 +1,21 @@
+modLoader="javafml"
+loaderVersion="[36,)"
+license="MIT"
+issueTrackerURL="https://github.com/CIOCOLATA47/AntiAfk/issues"
+mod {
+  modId="antiafk"
+  version="${version}"
+  displayName="AntiAfk"
+  updateJSONURL="https://modrinth.com/mod/antiafk"
+  displayURL="https://modrinth.com/mod/antiafk"
+  logoFile="icon.png"
+  credits="Thanks to all contributors!"
+  authors="Ciocolata47"
+  description='''
+    A mod that prevents players from going AFK.
+  '''
+  dependencies {
+    modCompile="forge@[36.2.20,)"
+    modCompile="minecraft@[1.20.6,)"
+  }
+}

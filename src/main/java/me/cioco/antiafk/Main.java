@@ -2,58 +2,73 @@ package me.cioco.antiafk;
 
 import me.cioco.antiafk.commands.*;
 import me.cioco.antiafk.config.AntiAfkConfig;
-import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.minecraft.client.option.KeyBinding;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ClientChatEvent;
+import net.minecraftforge.client.event.ClientTickEvent;
+import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
+import net.minecraftforge.fml.event.server.FMLServerStoppingEvent;
+import net.minecraftforge.fml.loading.FMLPaths;
+import net.minecraftforge.fmlclient.registry.ClientRegistry;
+import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.util.text.StringTextComponent;
 import org.lwjgl.glfw.GLFW;
 
-public class Main implements ModInitializer {
+@Mod("antiafk")
+public class Main {
     public static final AntiAfkConfig config = new AntiAfkConfig();
     public static KeyBinding keyBinding;
     public static boolean toggled = false;
 
-    @Override
-    public void onInitialize() {
+    public Main() {
+        MinecraftForge.EVENT_BUS.register(this);
+    }
 
+    @SubscribeEvent
+    public void onClientSetup(FMLClientSetupEvent event) {
         config.loadConfiguration();
 
-        keyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+        keyBinding = new KeyBinding(
                 "key.antiafk.toggle",
                 GLFW.GLFW_KEY_UNKNOWN,
                 "key.categories.antiafk"
-        ));
-
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if (client.world != null && client.player != null) {
-                if (client.world.getTime() == 1L) {
-                    toggled = false;
-                    client.player.sendMessage(Text.literal("AntiAfk: Disabled").formatted(Formatting.RED), false);
-                }
-
-                if (keyBinding.wasPressed()) {
-                    toggled = !toggled;
-                    String statusMessage = toggled ? "Enabled" : "Disabled";
-                    Formatting statusColor = toggled ? Formatting.GREEN : Formatting.RED;
-                    client.player.sendMessage(Text.literal("AntiAfk: " + statusMessage).formatted(statusColor), false);
-                }
-            }
-        });
-        addCommands();
+        );
+        ClientRegistry.registerKeyBinding(keyBinding);
     }
 
-    private void addCommands() {
-        ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
-            IntervalCommand.register(dispatcher);
-            JumpCommand.register(dispatcher);
-            SneakCommand.register(dispatcher);
-            SpinCommand.register(dispatcher);
-            SwingCommand.register(dispatcher);
-            MouseMovementCommand.register(dispatcher);
-            MovementCommand.register(dispatcher);
-        });
+    @SubscribeEvent
+    public void onClientTick(ClientTickEvent event) {
+        if (event.phase == ClientTickEvent.Phase.END) {
+            if (event.getClient().world != null && event.getClient().player != null) {
+                if (event.getClient().world.getGameTime() == 1L) {
+                    toggled = false;
+                    event.getClient().player.sendMessage(new StringTextComponent("AntiAfk: Disabled").mergeStyle(TextFormatting.RED), false);
+                }
+
+                if (keyBinding.isPressed()) {
+                    toggled = !toggled;
+                    String statusMessage = toggled ? "Enabled" : "Disabled";
+                    TextFormatting statusColor = toggled ? TextFormatting.GREEN : TextFormatting.RED;
+                    event.getClient().player.sendMessage(new StringTextComponent("AntiAfk: " + statusMessage).mergeStyle(statusColor), false);
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onRegisterCommands(RegisterCommandsEvent event) {
+        IntervalCommand.register(event.getDispatcher());
+        JumpCommand.register(event.getDispatcher());
+        SneakCommand.register(event.getDispatcher());
+        SpinCommand.register(event.getDispatcher());
+        SwingCommand.register(event.getDispatcher());
+        MouseMovementCommand.register(event.getDispatcher());
+        MovementCommand.register(event.getDispatcher());
     }
 }

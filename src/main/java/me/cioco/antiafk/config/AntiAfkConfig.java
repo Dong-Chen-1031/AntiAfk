@@ -1,6 +1,6 @@
 package me.cioco.antiafk.config;
 
-import net.fabricmc.loader.api.FabricLoader;
+import net.minecraftforge.fml.loading.FMLPaths;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -82,7 +82,7 @@ public class AntiAfkConfig {
     }
 
     private Path getConfigPath() {
-        return FabricLoader.getInstance().getConfigDir().resolve(CONFIG_FILE);
+        return FMLPaths.CONFIGDIR.get().resolve(CONFIG_FILE);
     }
 
     public int getInterval() {
