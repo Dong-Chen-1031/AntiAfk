@@ -1,3 +1,5 @@
+apply plugin: 'net.minecraftforge.gradle'
+
 plugins {
     id 'net.minecraftforge.gradle' version '5.1.32'
     id 'maven-publish'
@@ -15,10 +17,14 @@ repositories {
         name = 'Forge'
         url = 'https://files.minecraftforge.net/maven'
     }
+    maven { 
+        url 'https://maven.minecraftforge.net' 
+    }
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
+    classpath 'net.minecraftforge.gradle:ForgeGradle:5.1.32'
 }
 
 processResources {

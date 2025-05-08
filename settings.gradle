@@ -9,5 +9,8 @@ pluginManagement {
             name = 'Forge'
             url = 'https://files.minecraftforge.net/maven'
         }
+        maven {
+            url 'https://maven.minecraftforge.net'
+        }
     }
 }
