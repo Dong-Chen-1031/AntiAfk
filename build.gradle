@@ -1,5 +1,5 @@
 plugins {
-    id 'net.minecraftforge.gradle' version '5.1.+'
+    id 'net.minecraftforge.gradle' version '5.1.32'
     id 'maven-publish'
 }
 
@@ -7,6 +7,10 @@ version = project.mod_version
 group = project.maven_group
 
 repositories {
+    maven {
+        name = 'Forge'
+        url = 'https://files.minecraftforge.net/maven'
+    }
     maven {
         name = 'Forge'
         url = 'https://files.minecraftforge.net/maven'
